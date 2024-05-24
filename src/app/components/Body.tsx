@@ -2,6 +2,7 @@ import React from 'react'
 import { CardCompIns } from './CardCompIns'
 import { CardCompStud } from './CardCompStud'
 import { CardCompVerify } from './CardCompVerify'
+import { MintNFT } from './mint-nft'
 
 const Body = () => {
   return (
@@ -26,6 +27,7 @@ const Body = () => {
         <CardCompStud />
         <CardCompVerify />
       </div>
+      <MintNFT/>
     </main>
   )
 }

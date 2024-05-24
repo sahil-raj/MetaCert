@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { useAccount } from 'wagmi'
+import { useAccount, useWriteContract } from 'wagmi'
+import { abi } from './abi'
 
 interface InstitutionDetailsFormProps {
   onSubmit: (details: {
