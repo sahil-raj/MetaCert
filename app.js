@@ -65,17 +65,55 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         });
 
         // Construct IPFS gateway link
-        const pinataLink = `https://gateway.pinata.cloud/ipfs/${pinataResponse.data.IpfsHash}`;
+        const ipfsHash = pinataResponse.data.IpfsHash;
+        const pinataLink = `ipfs://${ipfsHash}`;
 
         // Clean up the uploaded file
         fs.unlinkSync(filePath);
 
-        res.json({ pinataLink });
+        // Create a JSON file with the specified format
+        const jsonContent = JSON.stringify({
+            name: "chilli",
+            description: "it's very spicy",
+            image: pinataLink
+        });
+        const jsonFilePath = path.join(uploadsDir, 'metadata.json');
+        fs.writeFileSync(jsonFilePath, jsonContent);
+
+        // Upload the JSON file to Pinata
+        const jsonFormData = new FormData();
+        jsonFormData.append('file', fs.createReadStream(jsonFilePath));
+
+        const jsonPinataMetadata = JSON.stringify({
+            name: 'metadata.json', // JSON file metadata
+        });
+        jsonFormData.append('pinataMetadata', jsonPinataMetadata);
+
+        const jsonPinataOptions = JSON.stringify({
+            cidVersion: 1, // Use CID version 1
+        });
+        jsonFormData.append('pinataOptions', jsonPinataOptions);
+
+        const jsonPinataResponse = await axios.post('https://api.pinata.cloud/pinning/pinFileToIPFS', jsonFormData, {
+            maxContentLength: Infinity, // Set maxContentLength instead of maxBodyLength
+            headers: {
+                'Authorization': `Bearer ${JWT}`, // Use JWT for authorization
+                ...jsonFormData.getHeaders()
+            },
+        });
+
+        // Clean up the JSON file
+        fs.unlinkSync(jsonFilePath);
+
+        // Return the hash of the uploaded JSON file
+        const jsonPinataLink = `https://gateway.pinata.cloud/ipfs/${jsonPinataResponse.data.IpfsHash}`;
+        res.json({ pinataLink, jsonPinataLink });
     } catch (error) {
         console.error('Error uploading to Pinata:', error);
         res.status(500).json({ error: 'Error uploading to Pinata' });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
