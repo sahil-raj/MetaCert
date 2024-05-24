@@ -1,0 +1,62 @@
+import React, { useState } from 'react'
+import { Input } from '@/components/ui/input'
+import { useAccount } from 'wagmi'
+import { Address } from 'viem'
+
+interface StudentDetailsFormProps {
+  onSubmit: (details: { name: string; address: Address }) => void
+  onClose: () => void
+  name: string
+}
+
+export const StudDetailsPopUp: React.FC<StudentDetailsFormProps> = ({
+  onSubmit,
+  onClose,
+  name,
+}) => {
+  const [studname, setStudname] = useState(name)
+  const { address, isConnecting, isDisconnected } = useAccount()
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    onSubmit({ name: studname, address })
+  }
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div className="bg-stone-400 p-8 w-[410px] rounded-lg">
+        <h2 className="text-xl font-semibold mb-4">Enter Student Details</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="flex-row">
+            <div className="flex flex-col space-y-2 pb-4">
+              <label htmlFor="studentname">Student Name:</label>
+              <Input
+                id="studentname"
+                value={studname}
+                onChange={(e) => setStudname(e.target.value)}
+                placeholder="Enter your name"
+                className="text-black"
+              />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label htmlFor="walletaddress">Wallet Address:</label>
+              <Input id="walletaddress" value={address} disabled />
+            </div>
+          </div>
+
+          <div className="flex justify-end mt-6">
+            <button
+              type="submit"
+              className="bg-amber-500 px-2 pt-1 hover:bg-amber-600 text-white rounded-lg"
+            >
+              Submit
+            </button>
+            <button className="ml-2" onClick={onClose}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
