@@ -33,11 +33,13 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
   const [insname, setInsname] = useState(name)
   const { address, isConnecting, isDisconnected } = useAccount()
   const [isHashReady, setIsHashReady] = useState(false)
+  const [isLoads, setIsLoads] = useState(false)
 
   const { data: hashd, writeContract } = useWriteContract()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoads(true)
 
     writeContract({
       address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
@@ -57,6 +59,7 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
 
   useEffect(() => {
     if (receipt?.logs) {
+      setIsLoads(false)
       setIsHashReady(true)
       console.log(receipt.logs)
     }
@@ -143,8 +146,16 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
                 <button
                   type="submit"
                   className="bg-amber-500 px-2 pt-1 hover:bg-amber-600 text-white rounded-lg"
+                  disabled={isLoading}
                 >
-                  Submit
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 border-4 border-t-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Loading...
+                    </div>
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
                 {hashd && <div>Transaction Hash: {hashd}</div>}
                 <button className="ml-2" onClick={onClose}>

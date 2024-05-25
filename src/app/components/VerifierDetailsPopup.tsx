@@ -6,18 +6,18 @@ import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 import { readContract } from '@wagmi/core'
 import { config } from './config'
-import http from "https"
+import http from 'https'
 
 type CryptoAddress = `0x${string}`
 
 const test = async (y: number, x: CryptoAddress) => {
-    const result = await readContract(config, {
-        abi,
-        address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
-        functionName: 'verifyCert',
-        args: [x, BigInt(y)],
-      })
-      return result
+  const result = await readContract(config, {
+    abi,
+    address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
+    functionName: 'verifyCert',
+    args: [x, BigInt(y)],
+  })
+  return result
 }
 
 interface VerifierDetailsFormProps {
@@ -52,23 +52,23 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
         path: `/api/v2/chain/sepolia/contract/0x9Dc51E8Cfc9F88385376a685Bf7997426467f487/nfts/${certuid}`,
         headers: {
           accept: 'application/json',
-          'x-api-key': '4f50cd4efe81413e8292f3b3d89000cc'
-        }
-      };
+          'x-api-key': '4f50cd4efe81413e8292f3b3d89000cc',
+        },
+      }
 
       const req = http.request(options, function (res) {
-        const chunks = [];
-      
+        const chunks = []
+
         res.on('data', function (chunk) {
-          chunks.push(chunk);
-        });
-      
+          chunks.push(chunk)
+        })
+
         res.on('end', function () {
-          const body = Buffer.concat(chunks);
-          console.log(body.toString());
-        });
-      });
-      
+          const body = Buffer.concat(chunks)
+          console.log(body.toString())
+        })
+      })
+
       req.end()
     } else {
       alert('uh')
@@ -78,9 +78,7 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="bg-stone-400 p-8 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">
-          Enter Student Details
-        </h2>
+        <h2 className="text-xl font-semibold mb-4">Enter Student Details</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-2 pb-2">
             <label htmlFor="studwallet">Student Wallet Address:</label>

@@ -144,7 +144,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
                       selected={date}
                       onSelect={setDate}
                       numberOfMonths={2}
-                      className="bg-amber-300"
+                      className="bg-amber-500"
                     />
                   </PopoverContent>
                 </Popover>
