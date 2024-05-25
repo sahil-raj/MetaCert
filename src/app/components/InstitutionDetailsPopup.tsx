@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import {
+  useAccount,
+  useWriteContract,
+  useWaitForTransactionReceipt,
+} from 'wagmi'
 import { getTransactionReceipt } from '@wagmi/core'
 import { config } from './config'
 import { abi } from './abi'
@@ -17,7 +21,6 @@ interface InstitutionDetailsFormProps {
   onClose: () => void
   name: string
 }
-
 
 export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
   onSubmit,
@@ -41,30 +44,28 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
       abi,
       functionName: 'registerIssuer',
       args: [insname, addressclg, BigInt(institutionId), BigInt(1)],
-    });
+    })
   }
 
-  const {data:receipt, isLoading, isError} = useWaitForTransactionReceipt({
+  const {
+    data: receipt,
+    isLoading,
+    isError,
+  } = useWaitForTransactionReceipt({
     hash: hashd,
-  });
+  })
 
-  if(receipt) {
-    setIsHashReady(true);
-  }
-
-  if (isHashReady) {
-    console.log(receipt.logs)
-    setIsHashReady(false);
-  }
-
-
-
+  useEffect(() => {
+    if (receipt?.logs) {
+      setIsHashReady(true)
+      console.log(receipt.logs)
+    }
+  }, [receipt])
   // const res = useTransactionReceipt({
   //   hash: hashd
   // });
 
   // console.log(res);
-
 
   // useEffect(() => {
   //   const m = async () => {
@@ -79,77 +80,105 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
   // }, [hashd]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div className="bg-stone-400 p-8 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">
-          Enter Institution Details
-        </h2>
-        <form onSubmit={handleSubmit}>
-          <div className="flex gap-6">
-            <div className="flex flex-col space-y-2 pb-2">
-              <label htmlFor="institutionName">Institution Name:</label>
-              <Input
-                id="institutionName"
-                value={insname}
-                onChange={(e) => setInsname(e.target.value)}
-                placeholder="Enter institution Name"
-                className="text-black placeholder:text-black"
-              />
-            </div>
-            <div className="flex flex-col space-y-2">
-              <label htmlFor="institutionId">Institution ID:</label>
-              <Input
-                id="institutionId"
-                type='number'
-                value={institutionId}
-                onChange={(e) => setInstitutionId(e.target.value)}
-                placeholder="Enter institution ID"
-              />
+    <div>
+      {!isHashReady && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-stone-400 p-8 rounded-lg">
+            <h2 className="text-xl font-semibold mb-4">
+              Enter Institution Details
+            </h2>
+            <form onSubmit={handleSubmit}>
+              <div className="flex gap-6">
+                <div className="flex flex-col space-y-2 pb-2">
+                  <label htmlFor="institutionName">Institution Name:</label>
+                  <Input
+                    id="institutionName"
+                    value={insname}
+                    onChange={(e) => setInsname(e.target.value)}
+                    placeholder="Enter institution Name"
+                    className="text-black placeholder:text-black"
+                  />
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <label htmlFor="institutionId">Institution ID:</label>
+                  <Input
+                    id="institutionId"
+                    type="number"
+                    value={institutionId}
+                    onChange={(e) => setInstitutionId(e.target.value)}
+                    placeholder="Enter institution ID"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <div className="flex flex-col space-y-2 mt-4">
+                  <label htmlFor="address">Address:</label>
+                  <Input
+                    id="address"
+                    value={addressclg}
+                    onChange={(e) => setAddressclg(e.target.value)}
+                    placeholder="Enter address"
+                  />
+                </div>
+                <div className="flex flex-col space-y-2 mt-4">
+                  <label htmlFor="address">District:</label>
+                  <Input
+                    id="address"
+                    value={district}
+                    onChange={(e) => setDistrict(e.target.value)}
+                    placeholder="District"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col space-y-2 mt-4">
+                <label htmlFor="address">Wallet Address:</label>
+                <Input
+                  id="address"
+                  value={address}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  disabled
+                />
+              </div>
+              <div className="flex justify-end mt-6">
+                <button
+                  type="submit"
+                  className="bg-amber-500 px-2 pt-1 hover:bg-amber-600 text-white rounded-lg"
+                >
+                  Submit
+                </button>
+                {hashd && <div>Transaction Hash: {hashd}</div>}
+                <button className="ml-2" onClick={onClose}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {isHashReady && receipt && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-stone-400 p-8 rounded-lg">
+            <h1 className="text-center text-xl">
+              Congratulations, you have succesfully registered as an Issuer!
+            </h1>
+            <h2 className="flex gap-4">
+              <h2 className="pt-2">Here is your UID: </h2>
+              <h1 className="text-amber-600 text-3xl font-bold">
+                {parseInt(receipt?.logs[0].data)}
+              </h1>{' '}
+              <h2 className="pt-2 text-md">..keep it safe</h2>
+            </h2>
+            <div className="flex items-end justify-end">
+              <button
+                className="mt-3 px-2 py-1 bg-amber-600 rounded-lg justify-end"
+                onClick={onClose}
+              >
+                Close
+              </button>
             </div>
           </div>
-          <div className="flex gap-6">
-            <div className="flex flex-col space-y-2 mt-4">
-              <label htmlFor="address">Address:</label>
-              <Input
-                id="address"
-                value={addressclg}
-                onChange={(e) => setAddressclg(e.target.value)}
-                placeholder="Enter address"
-              />
-            </div>
-            <div className="flex flex-col space-y-2 mt-4">
-              <label htmlFor="address">District:</label>
-              <Input
-                id="address"
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-                placeholder="District"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col space-y-2 mt-4">
-            <label htmlFor="address">Wallet Address:</label>
-            <Input
-              id="address"
-              value={address}
-              onChange={(e) => setDistrict(e.target.value)}
-              disabled
-            />
-          </div>
-          <div className="flex justify-end mt-6">
-            <button
-              type="submit"
-              className="bg-amber-500 px-2 pt-1 hover:bg-amber-600 text-white rounded-lg"
-            >
-              Submit
-            </button>
-            {hashd && <div>Transaction Hash: {hashd}</div>}
-            <button className="ml-2" onClick={onClose}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+      )}
     </div>
   )
 }
