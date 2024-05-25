@@ -6,6 +6,8 @@ import { useReadContract } from 'wagmi'
 import { abi } from './abi'
 import { readContract } from '@wagmi/core'
 import { config } from './config'
+import http from "https"
+
 type CryptoAddress = `0x${string}`
 
 const test = async (y: number, x: CryptoAddress) => {
@@ -42,7 +44,32 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
     // })
 
     if (await test(certuid, studwallet)) {
-      alert(`verified`);
+      // alert();
+      const options = {
+        method: 'GET',
+        hostname: 'testnets-api.opensea.io',
+        port: null,
+        path: `/api/v2/chain/sepolia/contract/0x9Dc51E8Cfc9F88385376a685Bf7997426467f487/nfts/${certuid}`,
+        headers: {
+          accept: 'application/json',
+          'x-api-key': '4f50cd4efe81413e8292f3b3d89000cc'
+        }
+      };
+
+      const req = http.request(options, function (res) {
+        const chunks = [];
+      
+        res.on('data', function (chunk) {
+          chunks.push(chunk);
+        });
+      
+        res.on('end', function () {
+          const body = Buffer.concat(chunks);
+          console.log(body.toString());
+        });
+      });
+      
+      req.end();
     } else {
       alert('uh')
     }
