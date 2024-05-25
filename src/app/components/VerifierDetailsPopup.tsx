@@ -7,6 +7,7 @@ import { abi } from './abi'
 import { readContract } from '@wagmi/core'
 import { config } from './config'
 import http from 'https'
+import VerifyNFTpopup from './VerifyNFTpopup'
 
 type CryptoAddress = `0x${string}`
 
@@ -26,6 +27,15 @@ interface VerifierDetailsFormProps {
   name: string
 }
 
+interface NFT {
+  name: string
+  description: string
+  identifier: string
+  image_url: string
+  metadata_url: string
+  opensea_url: string
+}
+
 export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
   onSubmit,
   onClose,
@@ -34,17 +44,14 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
   const [certuid, setCertuid] = useState(name)
   const [studwallet, setStudwallet] = useState('')
   const { address, isConnecting, isDisconnected } = useAccount()
+  const [responseBody, setResponseBody] = useState('')
+  const [response, setResponse] = useState(false)
+
+  const [nfts, setNfts] = useState<NFT[]>([])
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // const {data:result, isLoading, isLoadingError} = useReadContract({
-    //   abi,
-    //   address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
-    //   functionName: 'verifyCert',
-    //   args: [studwallet, BigInt(certuid)]
-    // })
 
     if (await test(certuid, studwallet)) {
-      // alert();
       const options = {
         method: 'GET',
         hostname: 'testnets-api.opensea.io',
@@ -65,7 +72,13 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
 
         res.on('end', function () {
           const body = Buffer.concat(chunks)
-          console.log(body.toString())
+          const rv = body.toString()
+          setResponse(true)
+          if (rv.length > 0) {
+            setNfts(rv)
+          } else {
+            alert('No NFTs are held.')
+          }
         })
       })
 
@@ -112,6 +125,13 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
             <button className="ml-2" onClick={onClose}>
               Cancel
             </button>
+            {response && nfts && (
+              <VerifyNFTpopup
+                NFT={nfts}
+                address={studwallet}
+                onClose={onClose}
+              />
+            )}
           </div>
         </form>
       </div>
