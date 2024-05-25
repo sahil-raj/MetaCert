@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, FormEvent } from 'react'
 import { MintNFTPopup } from '@/app/components/MintNFTPopup'
 import Sidebar from '../components/Sidebar'
 import ListCertificates from './Listcertificates'
@@ -22,6 +22,10 @@ const Dashboard: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false)
   const [name, setName] = useState('')
   const [activeTab, setActiveTab] = useState('issue')
+  const [formData, setFormData] = useState({
+    file: null
+});
+
 
   const handleRegisterClick = () => {
     setShowPopup(true)
@@ -32,8 +36,28 @@ const Dashboard: React.FC = () => {
     setName('')
   }
 
-  const handleSubmitDetails = (details: Details) => {
-    console.log('Submitted institution details:', details)
+  const handleSubmitDetails = async (file: File) => {
+    console.log('Submitted institution details:', file)
+    const formData = new FormData();
+    formData.append('file', file);
+    try  {
+      console.log(formData)
+      const response = await fetch("http://localhost:8080/upload", {
+        method: 'POST',
+        headers: {
+          "content-type": "multipart/form-data"
+        },
+        body: formData
+      });
+
+      if (response.ok) {
+        console.log("up");
+      } else {
+        console.log("nope");
+      }
+    } catch(e) {
+      console.log(e);
+    }
     setShowPopup(false)
     setName('')
   }
