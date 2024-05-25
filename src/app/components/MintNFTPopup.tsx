@@ -164,6 +164,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
             <Input
               type="file"
               id="file"
+              name="file"
               onChange={handleFileChange}
               className="cursor-pointer"
             />
