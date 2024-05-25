@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -14,6 +15,7 @@ import { Address } from 'viem'
 export function CardCompStud() {
   const [showPopup, setShowPopup] = useState(false)
   const [name, setName] = useState('')
+  const router = useRouter()
 
   const handleRegisterClick = () => {
     setShowPopup(true)
@@ -26,6 +28,7 @@ export function CardCompStud() {
   const handleSubmitDetails = (details: { name: string; address: Address }) => {
     console.log('Submitted student details:', details)
     setShowPopup(false)
+    router.push('/student')
   }
 
   return (

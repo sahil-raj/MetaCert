@@ -17,11 +17,16 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { writeContract } from 'viem/actions'
+import NFTminted from './NFTminted'
 
 type CryptoAddress = `0x${string}`
 
 interface MintNFTPopupprops {
-  onSubmit: (details: { uid: string; address: Address; file: File }) => void
+  onSubmit: (details: {
+    uid: string
+    address: CryptoAddress
+    file: File
+  }) => void
   onClose: () => void
 }
 
@@ -32,6 +37,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
   const [uid, setUid] = useState('')
   const [sname, setSname] = useState('')
   const [title, setTitle] = useState('')
+  const [mint, setMint] = useState(false)
   const [desc, setDesc] = useState('')
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(2022, 0, 20),
@@ -41,6 +47,9 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
     undefined
   )
   const [file, setFile] = useState<File | null>(null)
+  const handleClose = () => {
+    setMint(false)
+  }
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -54,6 +63,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
   const { data: hash, writeContract } = useWriteContract()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setMint(true)
     e.preventDefault()
 
     const formData = new FormData()
@@ -78,11 +88,11 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
       if (res.ok) {
         const data = await res.json()
         writeContract({
-          address: "0x9Dc51E8Cfc9F88385376a685Bf7997426467f487",
+          address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
           abi,
           functionName: 'mintCert',
-          args: [uid, studaddress, data.jsonPinataLink]
-        });
+          args: [uid, studaddress, data.jsonPinataLink],
+        })
         console.log(data)
       } else {
         console.error('Upload failed:', res.statusText)
@@ -188,7 +198,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
                       selected={date}
                       onSelect={setDate}
                       numberOfMonths={2}
-                      className="bg-amber-500"
+                      className="bg-stone-500"
                     />
                   </PopoverContent>
                 </Popover>
@@ -225,6 +235,13 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
             <button className="ml-2" onClick={onClose}>
               Cancel
             </button>
+            {mint && (
+              <NFTminted
+                sname={sname}
+                address={studaddress}
+                onClose={handleClose}
+              />
+            )}
           </div>
         </form>
       </div>
