@@ -15,7 +15,7 @@ export function MintNFT() {
     const formData = new FormData(e.target as HTMLFormElement) 
     const tokenId = formData.get('tokenId') as string 
     writeContract({
-      address: '0x5dEcd7CA736f6Bb41304597D1D15133617a7c331',
+      address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
       abi,
       functionName: 'registerIssuer',
       args: ["testName", "testAddress", BigInt(123), BigInt(1)],

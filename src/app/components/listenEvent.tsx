@@ -1,12 +1,15 @@
-import { getTransactionReceipt } from '@wagmi/core'
+// import { getTransactionReceipt } from '@wagmi/core'
+import { useTransactionReceipt } from 'wagmi';
 import { config } from './config'
 
-const listenEvent = async () => {
-    const t = await getTransactionReceipt(config, {
-        hash: '0x92dde09387f008528e94626cedba63b39a6aea8e98bdb701e78e9a0618583e86',
+const ListenEvent = () => {
+    const t = useTransactionReceipt({
+        hash: `0x4479a29476e18aa9e273fcad63a73b1fd31ec1a7069f5125a94b0e992c7d85a6`
     })
 
-    console.log(await t.logs);
+    console.log(t);
 }
 
-export default listenEvent;
+export default ListenEvent;
+
+//0x4479a29476e18aa9e273fcad63a73b1fd31ec1a7069f5125a94b0e992c7d85a6
