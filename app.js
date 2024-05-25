@@ -6,7 +6,7 @@ const axios = require('axios');
 const fs = require('fs');
 const multer = require('multer');
 const FormData = require('form-data');
-const ejsmate = require('ejs-mate');
+const ejsmate=require("ejs-mate");
 const methodoverride = require('method-override');
 
 const app = express();
@@ -32,6 +32,12 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 const upload = multer({ dest: uploadsDir });
+
+
+
+app.get("/",(req,res)=>{
+    res.render("index.ejs");
+})
 
 app.post('/upload', upload.single('file'), async (req, res) => {
     const file = req.file;
