@@ -5,6 +5,9 @@ import { CalendarIcon } from '@radix-ui/react-icons'
 import { addDays, format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
+import { useWriteContract, useReadContract } from 'wagmi'
+import { abi } from './abi'
+
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -13,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { writeContract } from 'viem/actions'
 
 type CryptoAddress = `0x${string}`
 
@@ -47,15 +51,50 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { data: hash, writeContract } = useWriteContract()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit({ uid, studaddress })
+
+    const formData = new FormData()
+    formData.append('uid', uid)
+    formData.append('sname', sname)
+    formData.append('title', title)
+    formData.append('desc', desc)
+    formData.append('studaddress', studaddress!)
+    if (file) {
+      formData.append('file', file)
+    } else {
+      console.error('No file selected')
+      return
+    }
+
+    try {
+      const res = await fetch('http://localhost:8080/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        writeContract({
+          address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
+          abi,
+          functionName: 'mintCert',
+          args: [uid, studaddress, data.jsonPinataLink],
+        })
+        console.log(data)
+      } else {
+        console.error('Upload failed:', res.statusText)
+      }
+    } catch (error) {
+      console.error('Error during upload:', error)
+    }
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0])
-      fetch('/')
     } else {
       setFile(null)
     }
@@ -191,27 +230,4 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
       </div>
     </div>
   )
-}
-
-const postData = async (data) => {
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
-    }
-
-    // If response is successful, return the response data
-    return await response.json() // Parse response body as JSON
-  } catch (error) {
-    console.error('Error:', error)
-    // Handle errors here
-    throw error // Rethrow the error to handle it outside
-  }
 }
