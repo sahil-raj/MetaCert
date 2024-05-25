@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { useAccount } from 'wagmi'
 import http from 'https'
+import QRCodeComponent from '../components/QRCodeComponent'
 import {
   Card,
   CardContent,
@@ -25,6 +26,8 @@ interface NFT {
 const Body = () => {
   const { address, isConnecting, isDisconnected } = useAccount()
   const [nfts, setNfts] = useState<NFT[]>([])
+
+  const rv = [];
 
   useEffect(() => {
     const options = {
@@ -70,6 +73,7 @@ const Body = () => {
           disabled
         />
       </div>
+      {/* <QRCodeComponent qrData="https://sahilraj.xyz" /> */}
       <div>
         <h1 className="text-3xl py-6 px-10 text-amber-600">Your EduNFTs:</h1>
         <div className="grid grid-cols-3 px-20 py-4 space-y-8">
