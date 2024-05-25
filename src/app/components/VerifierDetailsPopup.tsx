@@ -84,7 +84,7 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
 
       req.end()
     } else {
-      alert('uh')
+      alert('Verification failed!')
     }
   }
 

@@ -1,3 +1,5 @@
+import QRCodeComponent from "./QRCodeComponent"
+
 interface VerifyNFTpopupProps {
   NFT: Object
   address: string
@@ -49,6 +51,9 @@ const VerifyNFTpopup: React.FC<VerifyNFTpopupProps> = ({
           </div>
           <div className="pt-3 flex items-center gap-2 justify-center">
             <img src="./check-mark.png" className="w-10 h-10" /> Verified !
+          </div>
+          <div className="pt-3 flex justify-center">
+          <QRCodeComponent qrData={nfts.identifier} />
           </div>
           <div className="flex justify-end mt-6">
             <button className="ml-2" onClick={onClose}>

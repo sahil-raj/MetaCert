@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
+import { Address } from 'viem'
 
 interface NFT {
   name: string
@@ -34,7 +35,7 @@ const Body = () => {
       method: 'GET',
       hostname: 'testnets-api.opensea.io',
       port: null,
-      path: `/api/v2/chain/sepolia/account/0x1ddc4663d4EA70b96A05372466952755a54A5834/nfts`,
+      path: `/api/v2/chain/sepolia/account/${address}/nfts`,
       headers: {
         accept: 'application/json',
         'x-api-key': `${process.env.NEXT_PUBLIC_OPENSEA_API_KEY}`,
@@ -59,7 +60,7 @@ const Body = () => {
     })
 
     req.end()
-  }, [])
+  }, [address])
 
   return (
     <main className="pt-16">
@@ -120,6 +121,7 @@ const Body = () => {
                   >
                     Visit this at OpenSea
                   </a>
+                  <QRCodeComponent qrData={nft.identifier} />
                 </CardFooter>
               </Card>
             ))
