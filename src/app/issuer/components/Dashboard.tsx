@@ -9,8 +9,13 @@ type CryptoAddress = `0x${string}`
 
 interface Details {
   uid: string
-  address: CryptoAddress
+  sname: string
+  title: string
+  desc: string
+  date: Date
+  studaddress: CryptoAddress
   file: File
+
 }
 
 const Dashboard: React.FC = () => {
