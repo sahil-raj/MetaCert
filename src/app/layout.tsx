@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Josefin_Sans } from 'next/font/google'
 import './globals.css'
 
-const inter = Josefin_Sans({ weight: ['400'], subsets: ['latin'] })
+const Josefin = Josefin_Sans({ weight: ['400'], subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-stone-700`}>{children}</body>
+      <body className={`${Josefin.className} bg-stone-700`}>{children}</body>
     </html>
   )
 }

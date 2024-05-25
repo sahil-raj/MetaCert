@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import {
   useAccount,
@@ -8,6 +9,7 @@ import {
 import { getTransactionReceipt } from '@wagmi/core'
 import { config } from './config'
 import { abi } from './abi'
+import Link from 'next/link'
 // import ListenEvent from './listenEvent'
 
 interface InstitutionDetailsFormProps {
@@ -35,18 +37,49 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
   const [isHashReady, setIsHashReady] = useState(false)
   const [isLoads, setIsLoads] = useState(false)
 
+  const router = useRouter()
   const { data: hashd, writeContract } = useWriteContract()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoads(true)
-
     writeContract({
       address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
       abi,
       functionName: 'registerIssuer',
       args: [insname, addressclg, BigInt(institutionId), BigInt(1)],
     })
+    try {
+      const response = await fetch('http://localhost:3000/api/issuer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          institutionId,
+          institutionname: insname,
+          addressclg,
+          district,
+          address,
+        }),
+      })
+      console.log(
+        JSON.stringify({
+          institutionId,
+          institutionname: insname,
+          addressclg,
+          district,
+          address,
+        })
+      )
+      if (!response.ok) {
+        throw new Error('Failed to send institution details')
+      }
+
+      // Handle the response if needed
+    } catch (error) {
+      console.error('Error sending institution details:', error)
+    }
   }
 
   const {
@@ -62,6 +95,9 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
       setIsLoads(false)
       setIsHashReady(true)
       console.log(receipt.logs)
+      setTimeout(() => {
+        router.push('/issuer')
+      }, 3000)
     }
   }, [receipt])
   // const res = useTransactionReceipt({
