@@ -74,6 +74,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         // Construct IPFS gateway link
         const ipfsHash = pinataResponse.data.IpfsHash;
+        console.log(pinataResponse)
         const pinataLink = `ipfs://${ipfsHash}`;
 
         // Clean up the uploaded file
