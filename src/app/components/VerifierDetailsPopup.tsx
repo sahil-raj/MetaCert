@@ -90,7 +90,7 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div className="bg-stone-400 p-8 rounded-lg">
+      <div className="bg-stone-400 w-[400px] p-8 rounded-lg">
         <h2 className="text-xl font-semibold mb-4">Enter Student Details</h2>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-2 pb-2">

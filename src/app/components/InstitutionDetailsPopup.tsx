@@ -185,7 +185,7 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
                   disabled={isLoading}
                 >
                   {isLoading ? (
-                    <div className="flex items-center gap-2">
+                    <div className="flex py-1 items-center gap-2">
                       <div className="w-5 h-5 border-4 border-t-4 border-white border-t-transparent rounded-full animate-spin"></div>
                       Loading...
                     </div>
@@ -193,11 +193,13 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
                     'Submit'
                   )}
                 </button>
-                {hashd && <div>Transaction Hash: {hashd}</div>}
                 <button className="ml-2" onClick={onClose}>
                   Cancel
                 </button>
               </div>
+              {hashd && (
+                <div className="text-sm pt-2">Transaction Hash: {hashd}</div>
+              )}
             </form>
           </div>
         </div>
