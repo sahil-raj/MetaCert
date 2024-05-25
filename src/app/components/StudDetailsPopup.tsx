@@ -1,10 +1,13 @@
+'use client'
 import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { useAccount } from 'wagmi'
 import { Address } from 'viem'
+import { useRouter } from 'next/navigation'
+type CryptoAddress = `0x${string}`
 
 interface StudentDetailsFormProps {
-  onSubmit: (details: { name: string; address: Address }) => void
+  onSubmit: (details: { name: string; address: CryptoAddress }) => void
   onClose: () => void
   name: string
 }
@@ -14,12 +17,17 @@ export const StudDetailsPopUp: React.FC<StudentDetailsFormProps> = ({
   onClose,
   name,
 }) => {
+  const router = useRouter()
   const [studname, setStudname] = useState(name)
   const { address, isConnecting, isDisconnected } = useAccount()
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit({ name: studname, address })
+    try {
+      onSubmit({ name: studname, address })
+    } catch (error) {
+      console.error('Error submitting student details:', error)
+    }
   }
 
   return (

@@ -27,7 +27,6 @@ const Body = () => {
         <CardCompStud />
         <CardCompVerify />
       </div>
-      <MintNFT />
     </main>
   )
 }
