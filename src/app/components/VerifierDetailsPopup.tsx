@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
-import { useNavigate } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 import { Address } from 'cluster'
 import { useReadContract } from 'wagmi'
@@ -8,6 +7,7 @@ import { abi } from './abi'
 import { readContract } from '@wagmi/core'
 import { config } from './config'
 import http from 'https'
+import VerifyNFTpopup from './VerifyNFTpopup'
 
 type CryptoAddress = `0x${string}`
 
@@ -27,6 +27,15 @@ interface VerifierDetailsFormProps {
   name: string
 }
 
+interface NFT {
+  name: string
+  description: string
+  identifier: string
+  image_url: string
+  metadata_url: string
+  opensea_url: string
+}
+
 export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
   onSubmit,
   onClose,
@@ -36,8 +45,9 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
   const [studwallet, setStudwallet] = useState('')
   const { address, isConnecting, isDisconnected } = useAccount()
   const [responseBody, setResponseBody] = useState('')
-  const navigate = useNavigate()
+  const [response, setResponse] = useState(false)
 
+  const [nfts, setNfts] = useState<NFT[]>([])
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -62,9 +72,13 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
 
         res.on('end', function () {
           const body = Buffer.concat(chunks)
-          const responseBody = body.toString()
-          setResponseBody(responseBody)
-          navigate('/response', { state: { responseBody } })
+          const rv = body.toString()
+          setResponse(true)
+          if (rv.length > 0) {
+            setNfts(rv)
+          } else {
+            alert('No NFTs are held.')
+          }
         })
       })
 
@@ -111,6 +125,13 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
             <button className="ml-2" onClick={onClose}>
               Cancel
             </button>
+            {response && nfts && (
+              <VerifyNFTpopup
+                NFT={nfts}
+                address={studwallet}
+                onClose={onClose}
+              />
+            )}
           </div>
         </form>
       </div>

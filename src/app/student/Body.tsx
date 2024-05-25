@@ -3,9 +3,28 @@ import React, { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { useAccount } from 'wagmi'
 import http from 'https'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+
+interface NFT {
+  name: string
+  description: string
+  identifier: string
+  image_url: string
+  metadata_url: string
+  opensea_url: string
+}
 
 const Body = () => {
   const { address, isConnecting, isDisconnected } = useAccount()
+  const [nfts, setNfts] = useState<NFT[]>([])
 
   useEffect(() => {
     const options = {
@@ -28,26 +47,80 @@ const Body = () => {
 
       res.on('end', function () {
         const body = Buffer.concat(chunks)
-        const rv = JSON.parse(body.toString()).nfts.filter((x) => x.collection == "metacert-certs-2")
-        console.log(rv);
+        const rv = JSON.parse(body.toString()).nfts.filter(
+          (x) => x.collection == 'metacert-certs-2'
+        )
+        console.log(rv)
+        setNfts(rv)
       })
     })
 
     req.end()
   }, [])
 
-
   return (
     <main className="pt-16">
       <div className="p-2">
-        <div className="p-10 text-3xl text-amber-500">Your Profile:</div>
-        <div className="flex text-xl px-6">Name:</div>
-        <h1 className="text-black text-xl pt-2 px-6">Wallet Address:</h1>
+        <div className="p-10 text-3xl px-10 text-amber-500">Your Profile:</div>
+        <div className="flex text-xl px-10 text-orange-500">Name:</div>
+        <h1 className="text-xl pt-2 px-10 text-orange-500">Wallet Address:</h1>
         <Input
-          className="bg-amber-200 placeholder:text-black py-2 mx-6 px-6 w-[400px]"
+          className="bg-stone-200 placeholder:text-black py-2 mx-10 px-6 w-[400px]"
           placeholder={address}
           disabled
         />
+      </div>
+      <div>
+        <h1 className="text-3xl py-6 px-10 text-amber-600">Your EduNFTs:</h1>
+        <div className="grid grid-cols-3 px-20 py-4 space-y-8">
+          {nfts.length === 0 ? (
+            <h1 className="text-2xl text-black">No NFTs are held by you!</h1>
+          ) : (
+            nfts.map((nft) => (
+              <Card className="w-[350px] bg-stone-400">
+                <CardHeader className="p-2">
+                  <div className="flex-row items-center justify-center">
+                    {nft.image_url ? (
+                      <img
+                        src={nft.image_url}
+                        alt={nft.name}
+                        className="w-[340px] h-[220px] rounded-lg"
+                      />
+                    ) : (
+                      <img
+                        src="./dummy.png"
+                        alt="none"
+                        className="w-[340px] h-[220px] rounded-lg"
+                      />
+                    )}
+                  </div>
+                  <CardTitle className="text-center text-2xl">
+                    {nft.name ? nft.name : 'Name'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form>
+                    <div className="grid w-full items-center gap-4">
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="framework" className="px-4 text-xl">
+                          Description: {nft.description}
+                        </Label>
+                      </div>
+                    </div>
+                  </form>
+                </CardContent>
+                <CardFooter className="flex items-center justify-center">
+                  <a
+                    href={nft.opensea_url}
+                    className="text-amber-700 text-xl hover:text-amber-800 cursor-pointer"
+                  >
+                    Visit this at OpenSea
+                  </a>
+                </CardFooter>
+              </Card>
+            ))
+          )}
+        </div>
       </div>
     </main>
   )
