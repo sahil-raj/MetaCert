@@ -3,9 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { useAccount } from 'wagmi'
 import http from 'https'
+import QRCodeComponent from '../components/QRCodeComponent'
 
 const Body = () => {
   const { address, isConnecting, isDisconnected } = useAccount()
+
+  const rv = [];
 
   useEffect(() => {
     const options = {
@@ -49,6 +52,7 @@ const Body = () => {
           disabled
         />
       </div>
+      {/* <QRCodeComponent qrData="https://sahilraj.xyz" /> */}
     </main>
   )
 }
