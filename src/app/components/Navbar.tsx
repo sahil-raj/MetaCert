@@ -26,10 +26,16 @@ export default function Navbar() {
                 Home
               </a>
               <a
-                href="/"
+                href="/issuer"
                 className="border-b-2 border-transparent text-gray-700 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium"
               >
-                About
+                Issuer
+              </a>
+              <a
+                href="/student"
+                className="border-b-2 border-transparent text-gray-700 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium"
+              >
+                Student
               </a>
             </div>
             <div className="max-w-lg w-full lg:max-w-xs">
