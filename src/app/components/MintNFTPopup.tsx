@@ -49,7 +49,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit({ uid, studaddress })
+    onSubmit({ uid, sname, title, desc, date, studaddress, file})
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
