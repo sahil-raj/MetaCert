@@ -15,7 +15,6 @@ interface Details {
   date: Date
   studaddress: CryptoAddress
   file: File
-
 }
 
 const Dashboard: React.FC = () => {

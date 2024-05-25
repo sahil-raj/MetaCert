@@ -49,7 +49,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit({ uid, sname, title, desc, date, studaddress, file})
+    onSubmit({ uid, studaddress })
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,7 +149,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
                       selected={date}
                       onSelect={setDate}
                       numberOfMonths={2}
-                      className="bg-amber-500"
+                      className="bg-stone-500"
                     />
                   </PopoverContent>
                 </Popover>
@@ -167,11 +167,10 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
           </div>
           <div className="flex flex-col space-y-2 py-2 mt-2">
             <label htmlFor="file">File:</label>
-            <Input
+            <input
               type="file"
               name="file"
               id="file"
-              name="file"
               onChange={handleFileChange}
               className="cursor-pointer"
             />
@@ -192,4 +191,27 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
       </div>
     </div>
   )
+}
+
+const postData = async (data) => {
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    // If response is successful, return the response data
+    return await response.json() // Parse response body as JSON
+  } catch (error) {
+    console.error('Error:', error)
+    // Handle errors here
+    throw error // Rethrow the error to handle it outside
+  }
 }
