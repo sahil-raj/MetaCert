@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { MintNFTPopup } from '../components/MintNFTPopup'
 type CryptoAddress = `0x${string}`
+import Dashboard from './components/Dashboard'
 
 const Body = () => {
   const [showPopup, setShowPopup] = useState(false)
@@ -26,26 +27,8 @@ const Body = () => {
     setName('')
   }
   return (
-    <main>
-      <main className="flex items-center justify-center h-[70vh]">
-        <div className="flex-row">
-          <h1 className="text-orange-400 text-2xl">
-            Issue Educational Credential to a Student:
-          </h1>
-          <button
-            className="bg-amber-500 rounded-lg py-1 px-1 items-center"
-            onClick={handleRegisterClick}
-          >
-            Mint Certificate
-          </button>
-          {showPopup && (
-            <MintNFTPopup
-              onSubmit={handleSubmitDetails}
-              onClose={handleClosePopup}
-            />
-          )}
-        </div>
-      </main>
+    <main className="flex pt-20">
+      <Dashboard />
     </main>
   )
 }
