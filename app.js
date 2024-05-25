@@ -42,10 +42,10 @@ app.get("/",(req,res)=>{
 })
 
 app.post('/upload', upload.single('file'), async (req, res) => {
-    const {uid, studentname, certtitle, description, duration, walletaddress} = req.body;
+    // const {uid, studentname, certtitle, description, duration, walletaddress} = req.body;
     const file = req.file;
 
-    console.log(uid);
+    // console.log(uid);
     // console.log(duration);
 
     if (!file) {
