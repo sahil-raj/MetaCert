@@ -36,7 +36,7 @@ const test = async () => {
         functionName: 'verifyCert',
         args: ['0x1ddc4663d4EA70b96A05372466952755a54A5834', BigInt(5)],
       })
-      console.log(await result);
+      return result
 }
 
 export default test;
