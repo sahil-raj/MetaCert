@@ -77,6 +77,11 @@
     --dot-size: 5px;
     --dot-space: 20px;
     background: linear-gradient(
+        to bottom,
+        rgba(87, 83, 78, 0),
+        rgba(88, 83, 78, 1)
+      ),
+      linear-gradient(
           90deg,
           var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
           transparent 1%
