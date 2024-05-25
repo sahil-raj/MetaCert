@@ -23,6 +23,7 @@ export function CardCompIns() {
 
   const handleClosePopup = () => {
     setShowPopup(false)
+    setName('')
   }
 
   const handleSubmitDetails = (details: {
@@ -34,6 +35,7 @@ export function CardCompIns() {
   }) => {
     console.log('Submitted institution details:', details)
     setShowPopup(false)
+    setName('')
   }
   return (
     <Card className="w-[350px] bg-stone-400">

@@ -21,7 +21,7 @@ const Body = () => {
           </h3>
         </div>
       </main>
-      <div className="flex px-36  gap-20">
+      <div className="flex px-36 gap-20 pb-10">
         <CardCompIns />
         <CardCompStud />
         <CardCompVerify />
