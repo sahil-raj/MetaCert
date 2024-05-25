@@ -7,6 +7,7 @@ import { abi } from './abi'
 import { readContract } from '@wagmi/core'
 import { config } from './config'
 import http from "https"
+import QRCode from "qrcode"
 
 type CryptoAddress = `0x${string}`
 
@@ -69,7 +70,15 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
         });
       });
       
-      req.end();
+      req.end()
+
+      const generateQR = async text => {
+        try {
+          console.log(await QRCode.toDataURL(text))
+        } catch (err) {
+          console.error(err)
+        }
+      }
     } else {
       alert('uh')
     }
