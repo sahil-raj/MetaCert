@@ -8,8 +8,10 @@ const multer = require('multer');
 const FormData = require('form-data');
 const ejsmate=require("ejs-mate");
 const methodoverride = require('method-override');
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 const port = 8080;
 
 const JWT = process.env.JWT_TOKEN;
@@ -40,7 +42,11 @@ app.get("/",(req,res)=>{
 })
 
 app.post('/upload', upload.single('file'), async (req, res) => {
+    // const {uid, studentname, certtitle, description, duration, walletaddress} = req.body;
     const file = req.file;
+
+    // console.log(uid);
+    // console.log(duration);
 
     if (!file) {
         return res.status(400).json({ error: 'No file uploaded' });
