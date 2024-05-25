@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Input } from '@/components/ui/input'
+import { useNavigate } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 import { Address } from 'cluster'
 import { useReadContract } from 'wagmi'
@@ -34,17 +35,13 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
   const [certuid, setCertuid] = useState(name)
   const [studwallet, setStudwallet] = useState('')
   const { address, isConnecting, isDisconnected } = useAccount()
+  const [responseBody, setResponseBody] = useState('')
+  const navigate = useNavigate()
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // const {data:result, isLoading, isLoadingError} = useReadContract({
-    //   abi,
-    //   address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
-    //   functionName: 'verifyCert',
-    //   args: [studwallet, BigInt(certuid)]
-    // })
 
     if (await test(certuid, studwallet)) {
-      // alert();
       const options = {
         method: 'GET',
         hostname: 'testnets-api.opensea.io',
@@ -65,7 +62,9 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
 
         res.on('end', function () {
           const body = Buffer.concat(chunks)
-          console.log(body.toString())
+          const responseBody = body.toString()
+          setResponseBody(responseBody)
+          navigate('/response', { state: { responseBody } })
         })
       })
 
