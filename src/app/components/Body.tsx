@@ -3,6 +3,7 @@ import { CardCompIns } from './CardCompIns'
 import { CardCompStud } from './CardCompStud'
 import { CardCompVerify } from './CardCompVerify'
 import { MintNFT } from './mint-nft'
+import Footer from './Footer'
 
 const Body = () => {
   return (
@@ -22,11 +23,12 @@ const Body = () => {
           </h3>
         </div>
       </main>
-      <div className="flex px-36 gap-20 pb-10">
+      <div className="flex px-36 gap-20 pb-20">
         <CardCompIns />
         <CardCompStud />
         <CardCompVerify />
       </div>
+      <Footer />
     </main>
   )
 }
