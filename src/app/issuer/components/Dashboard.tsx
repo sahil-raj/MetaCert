@@ -6,6 +6,16 @@ import ListCertificates from './Listcertificates'
 import InsProfile from './Insprofile'
 
 type CryptoAddress = `0x${string}`
+/*
+
+jsonPinataLink
+: 
+"https://gateway.pinata.cloud/ipfs/bafkreiabsonhlkla33kizolnkmqngmsko7f5cjlmessllczeilnda3ybiu"
+pinataLink
+: 
+"ipfs://bafkreibogqvdwcombr6vkosmfphk2nf6kepckm3s3dqvbu7bonymeozwle"
+
+ */
 
 interface Details {
   uid: string

@@ -5,7 +5,7 @@ import { CalendarIcon } from '@radix-ui/react-icons'
 import { addDays, format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
-import { useWriteContract, useReadContract } from 'wagmi'
+import { useWriteContract, useTransactionReceipt, useReadContract } from 'wagmi'
 import { abi } from './abi'
 
 import { cn } from '@/lib/utils'
