@@ -49,7 +49,7 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
         path: `/api/v2/chain/sepolia/contract/0x9Dc51E8Cfc9F88385376a685Bf7997426467f487/nfts/${certuid}`,
         headers: {
           accept: 'application/json',
-          'x-api-key': '4f50cd4efe81413e8292f3b3d89000cc',
+          'x-api-key': `${process.env.NEXT_PUBLIC_OPENSEA_API_KEY}`,
         },
       }
 
