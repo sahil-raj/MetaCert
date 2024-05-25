@@ -8,18 +8,15 @@ import { WagmiProvider } from 'wagmi'
 import {
   mainnet,
   polygon,
-  optimism,
-  arbitrum,
-  base,
   sepolia,
 } from 'wagmi/chains'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 
 const config = getDefaultConfig({
-  appName: 'My RainbowKit App',
+  appName: 'MetaCert',
   projectId: 'YOUR_PROJECT_ID',
-  chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
+  chains: [mainnet, polygon, sepolia],
   ssr: true,
 })
 const queryClient = new QueryClient()
