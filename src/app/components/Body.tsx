@@ -13,11 +13,11 @@ const Body = () => {
             Your Credentials, Verified and Secured.
           </h1>
           <h3 className="px-96 py-6 text-sm text-orange-100">
-            MetaCred streamlines the certificate verification process.
+            MetaCert streamlines the certificate verification process.
             Institutions can seamlessly issue verifiable credentials as NFTs on
             the blockchain, while employers and other entities can instantly
             confirm the authenticity of these credentials with just a few
-            clicks. MetaCred ensures your achievements are secure, accessible,
+            clicks. MetaCert ensures your achievements are secure, accessible,
             and trusted globally.
           </h3>
         </div>
@@ -27,7 +27,7 @@ const Body = () => {
         <CardCompStud />
         <CardCompVerify />
       </div>
-      <MintNFT/>
+      <MintNFT />
     </main>
   )
 }
