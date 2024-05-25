@@ -37,9 +37,11 @@ export function CardCompVerify() {
   return (
     <Card className="w-[350px] bg-stone-400">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">Register</CardTitle>
+        <CardTitle className="text-center text-2xl">
+          Employer/ Organization?
+        </CardTitle>
         <CardDescription className="text-center text-xl text-orange-600 font-semibold">
-          as a Verifier/Employer.
+          Verify a Certificate here
         </CardDescription>
         <div className="flex-row items-center justify-center px-24 pt-4">
           <img src="./organization.png" className="w-28 h-24" />
@@ -67,7 +69,7 @@ export function CardCompVerify() {
           className="bg-orange-500 hover:bg-amber-500"
           onClick={handleRegisterClick}
         >
-          Register
+          Verify
         </Button>
         {showPopup && (
           <VerifierDetailsPopUp
