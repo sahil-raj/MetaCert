@@ -55,6 +55,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0])
+      fetch('/')
     } else {
       setFile(null)
     }
@@ -71,6 +72,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
                 <label htmlFor="uid">Enter UID:</label>
                 <Input
                   id="uid"
+                  name="uid"
                   value={uid}
                   onChange={(e) => setUid(e.target.value)}
                   placeholder="Enter your UID"
@@ -81,6 +83,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
                 <label htmlFor="studentname">Enter Student Name:</label>
                 <Input
                   id="studentname"
+                  name="studentname"
                   value={sname}
                   onChange={(e) => setSname(e.target.value)}
                   placeholder="Enter the Student Name"
@@ -91,6 +94,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
                 <label htmlFor="certtitle">Enter Certificate Title:</label>
                 <Input
                   id="certtitle"
+                  name="certtitle"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="Title"
@@ -102,6 +106,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
               <label htmlFor="description">Enter Description:</label>
               <Input
                 id="description"
+                name="description"
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 placeholder="Enter the Description"
@@ -121,7 +126,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
                         !date && 'text-muted-foreground'
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      <CalendarIcon className="mr-2 h-4 w-4" name="duration" />
                       {date?.from ? (
                         date.to ? (
                           <>
@@ -154,15 +159,17 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
               <label htmlFor="walletaddress">Wallet Address of Student:</label>
               <Input
                 id="walletaddress"
+                name="walletaddress"
                 value={studaddress}
                 onChange={handleAddressChange}
               />
             </div>
           </div>
           <div className="flex flex-col space-y-2 py-2 mt-2">
-            <label htmlFor="walletaddress">File:</label>
+            <label htmlFor="file">File:</label>
             <Input
               type="file"
+              name="file"
               id="file"
               name="file"
               onChange={handleFileChange}
