@@ -42,11 +42,7 @@ app.get("/",(req,res)=>{
 })
 
 app.post('/upload', upload.single('file'), async (req, res) => {
-    // const {uid, studentname, certtitle, description, duration, walletaddress} = req.body;
     const file = req.file;
-
-    // console.log(uid);
-    // console.log(duration);
 
     if (!file) {
         return res.status(400).json({ error: 'No file uploaded' });
@@ -85,11 +81,11 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         // Create a JSON file with the specified format
         const jsonContent = JSON.stringify({
-            name: "chilli",
-            description: "it's very spicy",
+            name: req.body.sname + "'s " + req.body.title,
+            description: req.body.desc,
             image: pinataLink
         });
-        const jsonFilePath = path.join(uploadsDir, 'metadata.json');
+        const jsonFilePath = path.join(uploadsDir, `${req.body.sname}.json`);
         fs.writeFileSync(jsonFilePath, jsonContent);
 
         // Upload the JSON file to Pinata
