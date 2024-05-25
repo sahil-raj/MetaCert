@@ -37,9 +37,9 @@ export function CardCompVerify() {
   return (
     <Card className="w-[350px] bg-stone-400">
       <CardHeader>
-        <CardTitle className="text-center text-2xl">Register</CardTitle>
+        <CardTitle className="text-center text-2xl">Verify</CardTitle>
         <CardDescription className="text-center text-xl text-orange-600 font-semibold">
-          as a Verifier/Employer.
+          Minted certificates.!
         </CardDescription>
         <div className="flex-row items-center justify-center px-24 pt-4">
           <img src="./organization.png" className="w-28 h-24" />
@@ -50,7 +50,7 @@ export function CardCompVerify() {
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="framework" className="px-4">
-                Name Of Your Organisation
+                Wallet address of Student
               </Label>
               <Input
                 id="name"
@@ -67,7 +67,7 @@ export function CardCompVerify() {
           className="bg-orange-500 hover:bg-amber-500"
           onClick={handleRegisterClick}
         >
-          Register
+          Verify
         </Button>
         {showPopup && (
           <VerifierDetailsPopUp
