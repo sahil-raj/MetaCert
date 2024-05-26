@@ -11,10 +11,12 @@ const NFTminted: React.FC<NFTmintedprops> = ({ sname, address, onClose }) => {
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="bg-stone-400 p-8 w-[800px] rounded-lg">
         <h2 className="text-xl font-semibold mb-4">
-          {address ? 'NFT Created...' : 'Fill all the Details first sighhh...'}
+          {address
+            ? 'NFT being Created...'
+            : 'Fill all the Details first sighhh...'}
         </h2>
         <h3 className="text-lg font-semibold">
-          added to {sname ? sname : 'none'}'s Wallet({address})
+          adding to {sname ? sname : 'none'}'s Wallet({address})
         </h3>
         <button
           className="rounded-lg px-1.5 mt-3 py-1 bg-amber-600"

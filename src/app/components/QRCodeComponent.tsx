@@ -1,10 +1,8 @@
-import React from 'react';
-import { QRCodeSVG } from 'qrcode.react';
+import React from 'react'
+import { QRCodeSVG } from 'qrcode.react'
 
-const QRCodeComponent = ({qrData}) => {
-    return (
-        <QRCodeSVG value={qrData} />
-    );
-};
+const QRCodeComponent = ({ qrData }) => {
+  return <QRCodeSVG value={qrData} className="w-12 h-12" />
+}
 
-export default QRCodeComponent;
+export default QRCodeComponent

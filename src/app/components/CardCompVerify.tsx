@@ -40,7 +40,7 @@ export function CardCompVerify() {
         <CardTitle className="text-center text-2xl">
           Employer/ Organization?
         </CardTitle>
-        <CardDescription className="text-center text-xl text-orange-600 font-semibold">
+        <CardDescription className="text-center text-xl text-blue-600 font-semibold">
           Verify a Certificate here
         </CardDescription>
         <div className="flex-row items-center justify-center px-24 pt-4">
@@ -66,7 +66,7 @@ export function CardCompVerify() {
       </CardContent>
       <CardFooter className="flex items-center justify-center">
         <Button
-          className="bg-orange-500 hover:bg-amber-500"
+          className="bg-blue-500 hover:bg-blue-400"
           onClick={handleRegisterClick}
         >
           Verify

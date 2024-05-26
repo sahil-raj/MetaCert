@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
+import '../styles/custom-styles.css'
 import { Address } from 'viem'
 
 interface NFT {
@@ -28,7 +29,7 @@ const Body = () => {
   const { address, isConnecting, isDisconnected } = useAccount()
   const [nfts, setNfts] = useState<NFT[]>([])
 
-  const rv = [];
+  const rv = []
 
   useEffect(() => {
     const options = {
@@ -63,11 +64,13 @@ const Body = () => {
   }, [address])
 
   return (
-    <main className="pt-16">
+    <main className="pt-1 bg-gray-300">
       <div className="p-2">
-        <div className="p-10 text-3xl px-10 text-amber-500">Your Profile:</div>
-        <div className="flex text-xl px-10 text-orange-500">Name:</div>
-        <h1 className="text-xl pt-2 px-10 text-orange-500">Wallet Address:</h1>
+        <div className="p-10 mt-20 text-3xl px-10 text-blue-600">
+          Your Profile:
+        </div>
+        <div className="flex text-xl px-10 text-blue-600">Name:</div>
+        <h1 className="text-xl pt-2 px-10 text-blue-600">Wallet Address:</h1>
         <Input
           className="bg-stone-200 placeholder:text-black py-2 mx-10 px-6 w-[400px]"
           placeholder={address}
@@ -76,20 +79,20 @@ const Body = () => {
       </div>
       {/* <QRCodeComponent qrData="https://sahilraj.xyz" /> */}
       <div>
-        <h1 className="text-3xl py-6 px-10 text-amber-600">Your EduNFTs:</h1>
+        <h1 className="text-3xl py-6 px-10 text-blue-600">Your EduNFTs:</h1>
         <div className="grid grid-cols-3 px-20 py-4 space-y-8">
           {nfts.length === 0 ? (
             <h1 className="text-2xl text-black">No NFTs are held by you!</h1>
           ) : (
             nfts.map((nft) => (
-              <Card className="w-[350px] bg-stone-400">
+              <Card className="w-[350px] pb-0 bg-blue-400">
                 <CardHeader className="p-2">
                   <div className="flex-row items-center justify-center">
                     {nft.image_url ? (
                       <img
                         src={nft.image_url}
                         alt={nft.name}
-                        className="w-[340px] h-[220px] rounded-lg"
+                        className="w-[340px] h-[260px] rounded-lg"
                       />
                     ) : (
                       <img
@@ -114,10 +117,10 @@ const Body = () => {
                     </div>
                   </form>
                 </CardContent>
-                <CardFooter className="flex items-center justify-center">
+                <CardFooter className="flex gap-6 items-center justify-center">
                   <a
                     href={nft.opensea_url}
-                    className="text-amber-700 text-xl hover:text-amber-800 cursor-pointer"
+                    className="text-xl text-indigo-800 hover:text-blue-500 cursor-pointer"
                   >
                     Visit this at OpenSea
                   </a>

@@ -32,9 +32,8 @@ const Dashboard: React.FC = () => {
   const [name, setName] = useState('')
   const [activeTab, setActiveTab] = useState('issue')
   const [formData, setFormData] = useState({
-    file: null
-});
-
+    file: null,
+  })
 
   const handleRegisterClick = () => {
     setShowPopup(true)
@@ -47,25 +46,25 @@ const Dashboard: React.FC = () => {
 
   const handleSubmitDetails = async (file: File) => {
     console.log('Submitted institution details:', file)
-    const formData = new FormData();
-    formData.append('file', file);
-    try  {
+    const formData = new FormData()
+    formData.append('file', file)
+    try {
       console.log(formData)
-      const response = await fetch("http://localhost:8080/upload", {
+      const response = await fetch('http://localhost:8080/upload', {
         method: 'POST',
         headers: {
-          "content-type": "multipart/form-data"
+          'content-type': 'multipart/form-data',
         },
-        body: formData
-      });
+        body: formData,
+      })
 
       if (response.ok) {
-        console.log("up");
+        console.log('up')
       } else {
-        console.log("nope");
+        console.log('nope')
       }
-    } catch(e) {
-      console.log(e);
+    } catch (e) {
+      console.log(e)
     }
     setShowPopup(false)
     setName('')
@@ -76,11 +75,11 @@ const Dashboard: React.FC = () => {
       case 'issue':
         return (
           <div className="p-4">
-            <h1 className="text-orange-400 text-2xl mb-4">
+            <h1 className="text-black text-2xl mb-4">
               Issue Educational Credential to a Student:
             </h1>
             <button
-              className="bg-amber-500 rounded-lg py-2 px-4"
+              className="bg-blue-500 rounded-lg py-2 px-4"
               onClick={handleRegisterClick}
             >
               Mint Certificate

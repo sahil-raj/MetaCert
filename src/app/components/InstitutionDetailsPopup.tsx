@@ -181,7 +181,7 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
               <div className="flex justify-end mt-6">
                 <button
                   type="submit"
-                  className="bg-amber-500 px-2 pt-1 hover:bg-amber-600 text-white rounded-lg"
+                  className="bg-blue-500 px-2 pt-1 hover:bg-blue-600 text-white rounded-lg"
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -212,14 +212,14 @@ export const InstitutionDetailsPopUp: React.FC<InstitutionDetailsFormProps> = ({
             </h1>
             <h2 className="flex gap-4">
               <h2 className="pt-2">Here is your UID: </h2>
-              <h1 className="text-amber-600 text-3xl font-bold">
+              <h1 className="text-blue-600 text-3xl font-bold">
                 {parseInt(receipt?.logs[0].data)}
               </h1>{' '}
               <h2 className="pt-2 text-md">..keep it safe</h2>
             </h2>
             <div className="flex items-end justify-end">
               <button
-                className="mt-3 px-2 py-1 bg-amber-600 rounded-lg justify-end"
+                className="mt-3 px-2 py-1 bg-blue-500 rounded-lg justify-end"
                 onClick={onClose}
               >
                 Close

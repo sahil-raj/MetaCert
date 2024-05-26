@@ -3,7 +3,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 export default function Navbar() {
   return (
-    <nav className="bg-amber-300 py-2 shadow-xl fixed w-full bg-opacity-90">
+    <nav className="bg-blue-400 py-2 shadow-xl fixed w-full bg-opacity-90">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">

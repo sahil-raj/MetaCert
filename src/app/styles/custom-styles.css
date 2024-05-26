@@ -71,17 +71,11 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    --dot-bg: black;
-    --dot-color: white;
+    --dot-bg: rgba(255, 255, 255, 0.733);
+    --dot-color: blac;
     --dot-size: 2px;
-    --dot-space: 20px;
+    --dot-space: 22px;
     background: linear-gradient(
-        to bottom,
-        rgba(87, 83, 78, 0),
-        rgba(88, 83, 78, 1)
-      ),
-      linear-gradient(
           90deg,
           var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
           transparent 1%

@@ -27,7 +27,7 @@ const Body = () => {
     setName('')
   }
   return (
-    <main className="flex pt-20">
+    <main className="flex pt-20 bg-stone-300">
       <Dashboard />
     </main>
   )

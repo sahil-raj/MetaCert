@@ -118,7 +118,7 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
           <div className="flex justify-end mt-6">
             <button
               type="submit"
-              className="bg-amber-500 px-2 pt-1 hover:bg-amber-600 text-white rounded-lg"
+              className="bg-blue-500 px-2 pt-1 hover:bg-blue-600 text-white rounded-lg"
             >
               Submit
             </button>
