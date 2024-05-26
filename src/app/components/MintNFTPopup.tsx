@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Address } from 'viem'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { addDays, format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
-import { useWriteContract, useTransactionReceipt, useReadContract } from 'wagmi'
+import { useWriteContract, useTransactionReceipt, useReadContract, useWaitForTransactionReceipt } from 'wagmi'
 import { abi } from './abi'
 
 import { cn } from '@/lib/utils'
@@ -63,7 +63,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
   const { data: hash, writeContract } = useWriteContract()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setMint(true)
+    //setMint(true)
     e.preventDefault()
 
     const formData = new FormData()
@@ -94,6 +94,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
           args: [uid, studaddress, data.jsonPinataLink],
         })
         console.log(data)
+
       } else {
         console.error('Upload failed:', res.statusText)
       }
@@ -101,6 +102,17 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
       console.error('Error during upload:', error)
     }
   }
+
+  const {data, isLoading, isError} = useWaitForTransactionReceipt({
+    hash: hash
+  });
+
+  useEffect(() => {
+    if (data?.logs) {
+      alert(`Your token UID is: ${Number(data.logs[2].data)}`);
+      setMint(true)
+    }
+  }, [data]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
