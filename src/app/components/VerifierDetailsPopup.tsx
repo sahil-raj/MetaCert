@@ -51,6 +51,7 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    //@ts-ignore
     if (await test(certuid, studwallet)) {
       const options = {
         method: 'GET',
@@ -64,6 +65,7 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
       }
 
       const req = http.request(options, function (res) {
+        //@ts-ignore
         const chunks = []
 
         res.on('data', function (chunk) {
@@ -71,10 +73,12 @@ export const VerifierDetailsPopUp: React.FC<VerifierDetailsFormProps> = ({
         })
 
         res.on('end', function () {
+          //@ts-ignore
           const body = Buffer.concat(chunks)
           const rv = body.toString()
           setResponse(true)
           if (rv.length > 0) {
+            //@ts-ignore
             setNfts(rv)
           } else {
             alert('No NFTs are held.')

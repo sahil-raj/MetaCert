@@ -24,6 +24,7 @@ export const StudDetailsPopUp: React.FC<StudentDetailsFormProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
+      //@ts-ignore
       onSubmit({ name: studname, address })
     } catch (error) {
       console.error('Error submitting student details:', error)

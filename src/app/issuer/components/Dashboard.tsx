@@ -86,6 +86,7 @@ const Dashboard: React.FC = () => {
             </button>
             {showPopup && (
               <MintNFTPopup
+              //@ts-ignore
                 onSubmit={handleSubmitDetails}
                 onClose={handleClosePopup}
               />

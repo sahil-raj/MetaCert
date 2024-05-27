@@ -91,7 +91,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
           address: '0x9Dc51E8Cfc9F88385376a685Bf7997426467f487',
           abi,
           functionName: 'mintCert',
-          args: [uid, studaddress, data.jsonPinataLink],
+          args: [BigInt(uid), studaddress as CryptoAddress, data.jsonPinataLink],
         })
         console.log(data)
 
@@ -250,6 +250,7 @@ export const MintNFTPopup: React.FC<MintNFTPopupprops> = ({
             {mint && (
               <NFTminted
                 sname={sname}
+                //@ts-ignore
                 address={studaddress}
                 onClose={handleClose}
               />

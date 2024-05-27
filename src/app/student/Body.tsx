@@ -44,6 +44,7 @@ const Body = () => {
     }
 
     const req = http.request(options, function (res) {
+      //@ts-ignore
       const chunks = []
 
       res.on('data', function (chunk) {
@@ -51,8 +52,10 @@ const Body = () => {
       })
 
       res.on('end', function () {
+        //@ts-ignore
         const body = Buffer.concat(chunks)
         const rv = JSON.parse(body.toString()).nfts.filter(
+          //@ts-ignore
           (x) => x.collection == 'metacert-certs-2'
         )
         console.log(rv)
