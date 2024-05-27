@@ -84,8 +84,9 @@ const Body = () => {
           {nfts.length === 0 ? (
             <h1 className="text-2xl text-black">No NFTs are held by you!</h1>
           ) : (
-            nfts.map((nft) => (
-              <Card className="w-[350px] pb-0 bg-blue-400">
+            nfts.map((nft, index) => (
+              <div key={index}>
+<Card className="w-[350px] pb-0 bg-blue-400">
                 <CardHeader className="p-2">
                   <div className="flex-row items-center justify-center">
                     {nft.image_url ? (
@@ -127,6 +128,7 @@ const Body = () => {
                   <QRCodeComponent qrData={nft.identifier} />
                 </CardFooter>
               </Card>
+              </div>
             ))
           )}
         </div>

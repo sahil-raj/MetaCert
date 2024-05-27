@@ -24,7 +24,7 @@ const VerifyNFTpopup: React.FC<VerifyNFTpopupProps> = ({
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-2 pb-2">
             <label htmlFor="studwallet" className="flex text-md">
-              Student's Wallet Address:{' '}
+              Student&apos;s Wallet Address:{' '}
               <div className="text-xs pl-2 pt-1">{address}</div>
             </label>
             <div className="flex pt-2 items-center justify-center">
